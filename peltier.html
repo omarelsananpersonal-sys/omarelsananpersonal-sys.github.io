@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peltier Cooling Unit Production Line | Mazin Omar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Mazin Omar</span>
+  <ul class="nav-links">
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#skills">Skills</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── Project Hero ── -->
+<div class="project-hero">
+  <div class="section-inner">
+    <a href="index.html" class="back-link">← Back to Portfolio</a>
+    <div class="tag-row">
+      <span class="tag">Python</span>
+      <span class="tag">InfluxDB</span>
+      <span class="tag">Grafana</span>
+      <span class="tag">Flask</span>
+      <span class="tag">Docker</span>
+      <span class="tag">Tkinter</span>
+    </div>
+    <h1>Peltier Cooling Unit<br>Production Line Simulation</h1>
+    <p>
+      A full-stack smart manufacturing system simulating a real Peltier Cooling Unit
+      production line — from PLC-level assembly logic to ERP-level maintenance management,
+      with live OEE metrics and Grafana dashboards.
+    </p>
+    <div class="btn-row" style="margin-top:2rem;justify-content:flex-start;">
+      <a href="https://github.com/omarelsananpersonal-sys/PeltierCoolingUnit-ProductionLine"
+         class="btn btn-primary" target="_blank">View on GitHub</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Project Content ── -->
+<div class="project-content">
+
+  <h2>What Is a Peltier Cooling Unit?</h2>
+  <p>
+    A Peltier Cooling Unit is a thermoelectric device that pumps heat from a cold side to a
+    hot side using the Peltier effect. They are used in lab cold plates, beverage coolers,
+    and precision temperature control systems. Each unit consists of four components —
+    an ASA polymer housing, a TEC module (bismuth telluride), a 12V blower fan, and an
+    ESP32 controller board — assembled and then thermal-tested to verify they can reach
+    a 5 °C setpoint.
+  </p>
+
+  <h2>System Architecture (ISA-95)</h2>
+  <p>The system follows the ISA-95 industrial automation hierarchy across four tiers:</p>
+  <div class="arch-box">┌─────────────────────────────────────────────────┐
+│  Level 4 — ERP / CMMS                          │
+│  Flask · SQLite · OEE-triggered alerts         │
+│  http://localhost:5000                         │
+├─────────────────────────────────────────────────┤
+│  Level 3 — MES / Analytics                     │
+│  InfluxDB 2.0 · Grafana Dashboards             │
+│  http://localhost:8086 | :3000                 │
+├─────────────────────────────────────────────────┤
+│  Level 2 — SCADA / HMI                         │
+│  Tkinter supervisor interface · OEE metrics    │
+│  hmi.py                                        │
+├─────────────────────────────────────────────────┤
+│  Level 1 — PLC / Field                         │
+│  Production simulation · Thermal telemetry     │
+│  prod.py  |  producer.py                       │
+└─────────────────────────────────────────────────┘</div>
+
+  <h2>OEE Metrics</h2>
+  <p>
+    Overall Equipment Effectiveness (OEE) is calculated every 5 seconds and streamed live
+    to InfluxDB. It is composed of three factors:
+  </p>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="val">A</div>
+      <div class="lbl">Availability<br>Run time ÷ Scheduled time</div>
+    </div>
+    <div class="metric-card">
+      <div class="val">P</div>
+      <div class="lbl">Performance<br>Actual ÷ Theoretical output</div>
+    </div>
+    <div class="metric-card">
+      <div class="val">Q</div>
+      <div class="lbl">Quality<br>Good units ÷ Total units</div>
+    </div>
+    <div class="metric-card" style="border-color:var(--accent);">
+      <div class="val">OEE</div>
+      <div class="lbl">A × P × Q<br>World-class: ≥ 85%</div>
+    </div>
+  </div>
+
+  <h2>Defect Classification</h2>
+  <p>The production line simulates three failure modes, each tracked separately:</p>
+  <ul>
+    <li><strong>Mechanical</strong> — Warped or dimensionally out-of-spec housing (detected at incoming QC)</li>
+    <li><strong>Electrical</strong> — Failed continuity on fan, board, or TEC module (detected at incoming QC)</li>
+    <li><strong>Thermal</strong> — Unit cannot reach 5 °C setpoint — thermal runaway (detected at Thermal QC station)</li>
+  </ul>
+
+  <h2>Downtime Tracking</h2>
+  <p>The HMI provides three stop modes, each logged separately to InfluxDB:</p>
+  <ul>
+    <li><strong>Emergency Stop</strong> — Unplanned downtime (equipment fault, unexpected halt)</li>
+    <li><strong>Planned Stop</strong> — Scheduled maintenance, shift changes</li>
+    <li><strong>Engineering Stop</strong> — Trials, changeovers, test runs</li>
+  </ul>
+
+  <h2>CMMS — Computerised Maintenance Management</h2>
+  <p>
+    A Flask web application manages scheduled maintenance for all five production machines.
+    When HMI detects OEE below 70%, it automatically creates an alert in the CMMS.
+  </p>
+  <ul>
+    <li>Housing 3D Printer — nozzle wear, ASA print calibration (every 90 days)</li>
+    <li>Incoming Component QC Jig — probe calibration (every 180 days)</li>
+    <li>Assembly Jig & Press — pneumatic press calibration, thermal paste dispenser check (annual)</li>
+    <li>Thermal Test Bench — thermocouple calibration (every 180 days)</li>
+    <li>Packaging & Label Station — seal bar wear (every 90 days)</li>
+  </ul>
+
+  <h2>Thermal Telemetry</h2>
+  <p>
+    A separate process (<code>producer.py</code>) simulates a real thermal sensor on the
+    Thermal Test Bench — running a PID-controlled TEC at 1 Hz, streaming temperature,
+    cooler output %, fault states, and random TEC trip events directly to InfluxDB.
+    This data feeds the Thermal Telemetry panel in Grafana.
+  </p>
+
+  <h2>Grafana Dashboard</h2>
+  <p>The live dashboard includes 8 panels:</p>
+  <ul>
+    <li>OEE Gauge (Red / Orange / Yellow / Green thresholds)</li>
+    <li>OEE Component Trends (Availability, Performance, Quality over time)</li>
+    <li>OEE Historical Trend</li>
+    <li>Assembled vs Rejected units over time</li>
+    <li>Total Assembled (stat card)</li>
+    <li>Total Rejected (stat card)</li>
+    <li>Defect Breakdown by Type (Mechanical / Electrical / Thermal)</li>
+    <li>Downtime by Category (Planned / Unplanned / Engineering)</li>
+    <li>TEC Thermal Telemetry (temperature vs 5 °C setpoint)</li>
+  </ul>
+
+  <h2>Screenshots</h2>
+  <div class="screenshot-placeholder">📸 HMI Screenshot — add your screenshot here</div>
+  <div class="screenshot-placeholder">📊 Grafana Dashboard — add your screenshot here</div>
+  <div class="screenshot-placeholder">🔧 CMMS Web App — add your screenshot here</div>
+
+  <h2>How to Run</h2>
+  <pre class="arch-box"># 1. Start infrastructure
+docker compose up -d
+
+# 2. Start CMMS (first run: seed database)
+cd CMMS && python cmms_init.py && python cmms_app.py
+
+# 3. Start HMI (new terminal)
+python hmi.py
+
+# 4. (Optional) Start thermal telemetry (new terminal)
+python producer.py</pre>
+
+  <div style="margin-top:3rem;">
+    <a href="https://github.com/omarelsananpersonal-sys/PeltierCoolingUnit-ProductionLine"
+       class="btn btn-primary" target="_blank">View Full Source on GitHub</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Mazin Omar · Mechatronics Engineering Student · SRH University</p>
+</footer>
+
+</body>
+</html>
