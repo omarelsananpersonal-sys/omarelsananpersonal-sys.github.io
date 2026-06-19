@@ -11,11 +11,11 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<style>
 			.project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-			.project-tag { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 3px 10px; font-size: 0.8rem; }
+			.project-tag { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 5px 14px; font-size: 0.9rem; font-weight: 600; }
 			.screenshot { width: 100%; border-radius: 8px; margin: 1rem 0; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-			.arch-box { background: #1a1a2e; border: 1px solid #333; border-radius: 6px; padding: 1.2rem 1.5rem; font-family: 'Courier New', monospace; font-size: 0.82rem; color: #7ec8e3; overflow-x: auto; white-space: pre; margin: 1rem 0; }
+			.arch-box { background: #f4f4f4; border: 1px solid #ddd; border-radius: 6px; padding: 1.2rem 1.5rem; font-family: 'Courier New', monospace; font-size: 0.95rem; color: #222; overflow-x: auto; white-space: pre; margin: 1rem 0; line-height: 1.8; font-weight: 600; }
 			.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
-			.metric-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem; text-align: center; }
+			.metric-card { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 1rem; text-align: center; }
 			.metric-card .val { font-size: 2rem; font-weight: 800; }
 			.metric-card .lbl { font-size: 0.75rem; opacity: 0.6; margin-top: 0.3rem; }
 			@media (max-width: 600px) { .metrics-grid { grid-template-columns: repeat(2,1fr); } }
@@ -46,32 +46,29 @@
 
 					<!-- Overview -->
 						<section id="overview" class="main">
-							<div class="spotlight">
-								<div class="content">
-									<header class="major">
-										<h2>What Is This?</h2>
-									</header>
-									<div class="project-tags">
-										<span class="project-tag">Python</span>
-										<span class="project-tag">InfluxDB</span>
-										<span class="project-tag">Grafana</span>
-										<span class="project-tag">Flask</span>
-										<span class="project-tag">Docker</span>
-										<span class="project-tag">Tkinter</span>
-										<span class="project-tag">ISA-95</span>
-									</div>
-									<p>A full-stack smart manufacturing system simulating a Peltier Cooling Unit
-									production line — from PLC-level assembly logic through to ERP-level
-									maintenance management, with live OEE metrics streaming to Grafana dashboards.</p>
-									<p>Each finished unit consists of an ASA housing, TEC module, blower fan,
-									and ESP32 controller board. After assembly, every unit undergoes
-									thermal acceptance testing — it must cool to 5 °C or be rejected.</p>
-									<ul class="actions">
-										<li><a href="https://github.com/omarelsananpersonal-sys/PeltierCoolingUnit-ProductionLine" class="button primary" target="_blank">View on GitHub</a></li>
-									</ul>
-								</div>
-								<span class="image"><img src="images/hmi.png" alt="HMI Screenshot" style="border-radius:8px;" /></span>
+							<header class="major">
+								<h2>What Is This?</h2>
+							</header>
+							<div class="project-tags">
+								<span class="project-tag">Python</span>
+								<span class="project-tag">InfluxDB</span>
+								<span class="project-tag">Grafana</span>
+								<span class="project-tag">Flask</span>
+								<span class="project-tag">Docker</span>
+								<span class="project-tag">Tkinter</span>
+								<span class="project-tag">ISA-95</span>
 							</div>
+							<p>A full-stack smart manufacturing system simulating a Peltier Cooling Unit
+							production line — from PLC-level assembly logic through to ERP-level
+							maintenance management, with live OEE metrics streaming to Grafana dashboards.</p>
+							<p>Each finished unit consists of an ASA housing, TEC module, blower fan,
+							and ESP32 controller board. After assembly, every unit undergoes
+							thermal acceptance testing — it must cool to 5 °C or be rejected.</p>
+							<img src="images/hmi.png" alt="HMI Screenshot" class="screenshot" />
+							<p><em>Supervisor HMI — live pipeline tracking, defect log, and downtime controls</em></p>
+							<ul class="actions">
+								<li><a href="https://github.com/omarelsananpersonal-sys/PeltierCoolingUnit-ProductionLine" class="button primary" target="_blank">View on GitHub</a></li>
+							</ul>
 						</section>
 
 					<!-- Architecture -->
